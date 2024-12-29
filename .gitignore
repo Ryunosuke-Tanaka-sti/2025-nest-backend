@@ -1,5 +1,4 @@
 .env
-postgres/data/*
+postgres/data
 pgadmin/*
-!.gitkeep
 scripts

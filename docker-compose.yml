@@ -6,10 +6,15 @@ services:
         - NODE_VER=22.12.0
       context: .
       dockerfile: Dockerfile
+      target: dev
     tty: true
     volumes:
-      - .:/home/node/app
-      - node_modules:/home/node/app/nest-app/node_modules
+      - type: bind
+        source: .
+        target: /home/node/app
+      - type: volume
+        source: node_modules
+        target: /home/node/app/nest-app/node_modules
   postgresql:
     env_file: ".env"
     container_name: postgresql
@@ -18,8 +23,12 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - ./postgres/data:/var/lib/postgresql/data
-      - ./postgres/init:/docker-entrypoint-initdb.d
+      - type: bind
+        source: ./postgres/data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: ./postgres/init
+        target: /docker-entrypoint-initdb.d
     environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
