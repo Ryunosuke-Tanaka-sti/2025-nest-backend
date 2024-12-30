@@ -15,6 +15,9 @@ services:
       - type: volume
         source: node_modules
         target: /home/node/app/nest-app/node_modules
+    networks:
+      - pride-project
+
   postgresql:
     env_file: ".env"
     container_name: postgresql
@@ -36,6 +39,8 @@ services:
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
     hostname: postgres
     restart: always
+    networks:
+      - pride-project
 
   pgadmin4:
     env_file: ".env"
@@ -53,6 +58,12 @@ services:
     links:
       - postgresql
     restart: always
+    networks:
+      - pride-project
 
 volumes:
   node_modules:
+
+networks:
+  pride-project:
+    external: true

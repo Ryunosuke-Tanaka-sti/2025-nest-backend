@@ -33,5 +33,6 @@
     }
   },
   "forwardPorts": [5173],
-  "remoteUser": "node"
+  "remoteUser": "node",
+  "initializeCommand": "docker network inspect pride-project || docker network create pride-project"
 }
